@@ -1,0 +1,130 @@
+/* --- CONTAINER --- */
+.projects-section {
+    padding: 40px 20px; /* CHANGED: Reduced from 80px */
+    background: transparent;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.projects-header {
+    text-align: center;
+    margin-bottom: 30px; /* CHANGED: Reduced from 60px */
+}
+
+/* ... (rest of the file remains the same, assuming compact card updates from before) ... */
+.section-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, var(--text-main), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+}
+
+.title-underline {
+    width: 80px;
+    height: 4px;
+    background: var(--primary);
+    margin: 0 auto;
+    border-radius: 2px;
+    box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 30px;
+    padding: 10px;
+}
+
+.project-card-modern {
+    background: var(--bg-card);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.project-card-modern:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px -10px var(--shadow);
+    border-color: var(--primary);
+}
+
+.card-visual {
+    height: 130px; 
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-body);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-bg-wrapper { width: 100%; height: 100%; }
+.visual-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.project-card-modern:hover .visual-img { transform: scale(1.1); }
+
+.card-overlay {
+    position: absolute; inset: 0; background: rgba(15, 23, 42, 0.6); 
+    backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: all 0.3s ease; z-index: 2;
+}
+.project-card-modern:hover .card-overlay { opacity: 1; }
+
+.view-btn {
+    padding: 10px 24px; background: white; color: var(--primary); border-radius: 50px;
+    font-weight: 700; font-size: 0.9rem; text-decoration: none; transform: translateY(20px);
+    transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: flex; align-items: center; gap: 8px;
+}
+.project-card-modern:hover .view-btn { transform: translateY(0); }
+
+.card-body {
+    padding: 15px; display: flex; flex-direction: column; flex-grow: 1;
+    background: linear-gradient(180deg, var(--bg-card) 0%, rgba(255,255,255,0.01) 100%);
+}
+
+.card-top { margin-bottom: 8px; }
+.project-name { margin: 0 0 5px 0; font-size: 1.2rem; font-weight: 800; line-height: 1.2; color: var(--text-main); letter-spacing: -0.01em; }
+
+.tech-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.tech-pill { font-size: 0.7rem; padding: 3px 10px; background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.15); color: var(--primary); border-radius: 6px; font-weight: 600; }
+.tech-more { font-size: 0.7rem; color: var(--text-secondary); align-self: center; font-weight: 600; }
+
+.project-desc {
+    font-size: 0.85rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 12px; flex-grow: 1;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.card-footer {
+    display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px dashed var(--border-color); margin-top: auto;
+}
+.details-link { font-weight: 700; font-size: 0.9rem; color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.details-link:hover { color: var(--primary); }
+.arrow { transition: transform 0.2s; font-size: 0.85rem; }
+.details-link:hover .arrow { transform: translateX(5px); }
+.icon-link { color: var(--text-secondary); transition: all 0.2s; font-size: 1.1rem; padding: 5px; border-radius: 50%; }
+.icon-link:hover { color: var(--primary); background: rgba(99, 102, 241, 0.1); }
+
+.admin-controls-pill {
+    position: absolute; top: 10px; right: 10px; background: var(--bg-card); padding: 4px; border-radius: 30px;
+    display: flex; gap: 6px; z-index: 10; opacity: 0; transform: translateY(-10px);
+    transition: all 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 1px solid var(--border-color);
+}
+.project-card-modern:hover .admin-controls-pill { opacity: 1; transform: translateY(0); }
+.admin-btn { border: none; background: transparent; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; color: var(--text-secondary); }
+.admin-btn.edit:hover { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+.admin-btn.delete:hover { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+.modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+.modal-glass { background: var(--bg-card); width: 90%; max-width: 500px; padding: 35px; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: var(--text-main); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.modal-form .form-group { margin-bottom: 12px; }
+.modal-form label { display: block; margin-bottom: 4px; font-weight: 500; font-size: 0.85rem; color: var(--text-secondary); }
+.modal-form input, .modal-form textarea { width: 100%; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-body); color: var(--text-main); font-size: 0.9rem; }
+.save-btn { width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 8px; font-size: 0.95rem; }

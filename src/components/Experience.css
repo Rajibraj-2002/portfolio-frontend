@@ -1,0 +1,184 @@
+/* --- CONTAINER --- */
+.experience-wrapper {
+    padding: 40px 20px; /* CHANGED: Reduced spacing */
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.experience-header {
+    text-align: center;
+    margin-bottom: 30px; /* CHANGED: Reduced margin */
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* --- GRID LAYOUT --- */
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px; 
+    padding: 5px;
+    justify-content: center;
+}
+
+/* --- CARD DESIGN --- */
+.exp-modern-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 15px; 
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+    min-width: 0;
+}
+
+.exp-modern-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.15);
+    background: linear-gradient(145deg, var(--bg-card) 0%, rgba(99, 102, 241, 0.05) 100%);
+}
+
+/* --- CARD HEADER --- */
+.exp-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.exp-icon-box {
+    width: 30px;
+    height: 30px;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    flex-shrink: 0;
+}
+
+.exp-header-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.exp-role {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0 0 2px 0;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.exp-duration {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    font-family: monospace;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1px 5px;
+    border-radius: 3px;
+}
+
+/* --- COMPANY INFO --- */
+.exp-company-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+    padding-left: 38px;
+}
+
+.company-icon {
+    color: var(--primary);
+    font-size: 0.8rem;
+}
+
+.exp-company {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+/* Divider Line */
+.exp-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin-bottom: 10px;
+    width: 100%;
+    opacity: 0.5;
+}
+
+/* --- DESCRIPTION --- */
+.exp-desc {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    margin: 0;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* --- ADMIN CONTROLS --- */
+.exp-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+    opacity: 0;
+    transform: translateX(5px);
+    transition: all 0.2s ease;
+}
+
+.exp-modern-card:hover .exp-controls {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.ctrl-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: var(--bg-body);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    font-size: 9px;
+    color: var(--text-main);
+    transition: all 0.2s;
+}
+
+.ctrl-btn:hover { transform: scale(1.1); }
+.ctrl-btn.edit:hover { background: var(--primary); color: white; }
+.ctrl-btn.del:hover { background: #ef4444; color: white; }
+
+@media (max-width: 768px) {
+    .experience-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .exp-company-row { padding-left: 0; }
+}

@@ -1,38 +1,119 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+:root {
+  /* --- LIGHT MODE (DEFAULT) --- */
+  --primary: #4f46e5; 
+  --primary-glow: rgba(79, 70, 229, 0.3);
+
+  --bg-body: #ffffff; /* Pure white base */
+  --bg-card: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.8);
+  
+  --text-main: #0f172a; 
+  --text-secondary: #475569; 
+  
+  --border-color: #e2e8f0;
+  --shadow: rgba(148, 163, 184, 0.15); 
+  
+  /* --- MODERN DOT MATRIX (Light) --- */
+  --bg-image: 
+      /* 1. Soft Indigo Glow at the top center */
+      radial-gradient(circle at 50% -20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+      /* 2. The Dot Pattern (Slate dots) */
+      radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+      
+  --bg-size: 100% 100%, 24px 24px; /* Dots spaced 24px apart */
+              
+  --grid-dot: rgba(0, 0, 0, 0.1); 
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* --- DARK MODE OVERRIDE --- */
+body.dark-mode {
+  --primary: #6366f1; 
+  --primary-glow: rgba(99, 102, 241, 0.4);
+  
+  --bg-body: #050505; 
+  --bg-card: #0a0a0a; 
+  --bg-glass: rgba(20, 20, 20, 0.7);
+  
+  --text-main: #ffffff;
+  --text-secondary: #94a3b8; 
+  
+  --border-color: #262626;
+  --shadow: rgba(0,0,0,0.5);
+  
+  /* --- MODERN DOT MATRIX (Dark) --- */
+  --bg-image: 
+      /* 1. Subtle Dark Indigo Glow */
+      radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+      /* 2. The Dot Pattern (Low opacity white dots for "Starfield" effect) */
+      radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+      
+  --bg-size: 100% 100%, 24px 24px;
+  
+  --grid-dot: rgba(255, 255, 255, 0.15); 
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* --- GLOBAL RESET --- */
+* { box-sizing: border-box; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-body); }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+body.dark-mode ::-webkit-scrollbar-thumb { background: #333; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0; 
+  padding: 0;
+  overflow-x: hidden;
+  color: var(--text-main);
+  background-color: var(--bg-body);
+  
+  /* Apply the new background variables */
+  background-image: var(--bg-image);
+  background-size: var(--bg-size);
+  background-attachment: fixed; /* Keeps dots static while scrolling */
+  
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.App { width: 100%; min-height: 100vh; overflow: hidden; }
+
+/* Scroll Offset Fix */
+#home, #about, #education, #skills, #projects, #internships, #certificates, #contact {
+  scroll-margin-top: 80px; 
 }
 
-.App-link {
-  color: #61dafb;
+/* Typography Overrides */
+h1, h2, h3, h4, strong { color: var(--text-main); letter-spacing: -0.02em; }
+p { line-height: 1.6; }
+
+/* --- SECTION STYLES --- */
+.section-title {
+  text-align: center; 
+  margin-bottom: 60px;
+  font-size: 2.5rem;
+  font-weight: 800;
+  /* Adaptive Gradient Title */
+  background: linear-gradient(to right, var(--text-main), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* --- BUTTONS --- */
+.btn-primary-custom {
+  background: var(--primary);
+  color: white !important;
+  padding: 12px 30px;
+  border: none; border-radius: 50px;
+  font-weight: 600; font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 0 20px var(--primary-glow);
+  transition: all 0.3s ease;
+}
+.btn-primary-custom:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 0 30px var(--primary-glow); 
 }

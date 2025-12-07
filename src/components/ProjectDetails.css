@@ -1,0 +1,338 @@
+/* --- IMMERSIVE WRAPPER --- */
+.pd-immersive-wrapper {
+    background: var(--bg-body); /* Adaptive */
+    color: var(--text-main);    /* Adaptive */
+    min-height: 100vh;
+    padding-top: 80px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pd-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* --- HERO HEADER --- */
+.pd-hero {
+    background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-body) 100%);
+    padding: 50px 0 60px; /* Slightly reduced padding */
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.pd-hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.pd-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 25px;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 30px;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s;
+    background: var(--bg-card);
+    font-size: 0.9rem;
+}
+.pd-back-btn:hover { 
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateX(-5px);
+}
+
+.pd-title {
+    font-size: 2.5rem; /* CHANGED: Reduced from 3.5rem */
+    font-weight: 800;
+    margin: 0 0 15px 0;
+    line-height: 1.2;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+
+.pd-badges {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.pd-badge {
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.pd-badge.category { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+.pd-badge.status { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+
+.pd-hero-visual { display: none; } 
+
+/* --- LAYOUT GRID --- */
+.pd-grid {
+    display: grid;
+    /* Sidebar Layout */
+    grid-template-columns: 2.5fr 1.2fr; 
+    gap: 60px;
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
+
+/* --- MAIN CONTENT --- */
+.pd-section {
+    margin-bottom: 50px;
+}
+
+.pd-section h2 {
+    font-size: 1.6rem; /* Slightly smaller headers */
+    margin-bottom: 20px;
+    color: var(--text-main);
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.pd-section h2::before {
+    content: '';
+    width: 5px;
+    height: 24px;
+    background: var(--primary);
+    border-radius: 4px;
+    display: block;
+}
+
+.pd-text {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    white-space: pre-line; 
+    text-align: left;
+}
+
+.pd-tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.pd-tech-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: var(--text-main);
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+.pd-tech-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+.pd-tech-icon { color: var(--primary); }
+
+/* --- SIDEBAR CARD (COMPACT DESIGN) --- */
+.pd-sidebar { position: sticky; top: 100px; height: fit-content; }
+
+.pd-action-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.pd-action-card h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.pd-action-card p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+.pd-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+/* Buttons (Compact) */
+.pd-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.pd-btn.primary {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 2px 10px var(--primary-glow);
+    border: none;
+}
+.pd-btn.primary:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 5px 15px var(--primary-glow); 
+    filter: brightness(1.1);
+}
+
+.pd-btn.secondary {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+.pd-btn.secondary:hover { 
+    border-color: var(--text-main);
+    background: var(--bg-body);
+}
+
+/* --- CREDENTIALS BOX (Compact Style) --- */
+.pd-creds-box {
+    margin-top: 15px;
+    background: #fffbeb; 
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    padding: 12px;
+    position: relative;
+    overflow: hidden;
+}
+body.dark-mode .pd-creds-box {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.pd-creds-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 3px; height: 100%;
+    background: #f59e0b;
+}
+
+.creds-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #b45309; 
+    font-size: 0.75rem; 
+    font-weight: 800;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+body.dark-mode .creds-header { color: #fbbf24; }
+
+.creds-content {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    color: #451a03;
+    white-space: pre-wrap; 
+    margin: 0;
+    line-height: 1.3;
+}
+body.dark-mode .creds-content { color: #fef3c7; }
+
+/* --- PRIVATE MSG --- */
+.pd-private-msg {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(239, 68, 68, 0.08); 
+    border: 1px dashed rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    color: #ef4444; 
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.lock-icon {
+    font-size: 1rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* --- META INFO (Compact) --- */
+.pd-meta {
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+    margin-top: 15px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.meta-row { display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+/* Mobile */
+@media (max-width: 900px) {
+    .pd-grid { grid-template-columns: 1fr; gap: 40px; }
+    .pd-title { font-size: 2rem; } /* Smaller on mobile too */
+    .pd-container { padding: 0 20px; }
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 900px) {
+    .pd-immersive-wrapper {
+        padding-top: 100px;
+    }
+
+    .pd-container {
+        padding: 0 20px;
+    }
+
+    .pd-title {
+        font-size: 2rem;
+    }
+
+    .pd-grid {
+        grid-template-columns: 1fr; /* Single column */
+        gap: 40px;
+        margin-top: 30px;
+    }
+
+    /* Move Sidebar to top or keep at bottom? Standard is bottom for details */
+    .pd-sidebar {
+        position: relative;
+        top: 0;
+        order: -1; /* Option: Move actions to top on mobile for easy access */
+    }
+
+    .pd-hero {
+        padding: 40px 0;
+    }
+    
+    .pd-text {
+        padding: 20px;
+        font-size: 1rem;
+    }
+}

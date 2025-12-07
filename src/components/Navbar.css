@@ -1,0 +1,244 @@
+/* --- SPOTLIGHT NAVBAR CONTAINER --- */
+.nav-spotlight {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    width: auto;
+    /* Adjusted for better desktop fitting */
+    min-width: 650px; 
+    max-width: 95%;
+    height: 65px;
+    
+    /* --- LIGHT MODE (DEFAULT / Base Styles) --- */
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50px;
+    box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.15); 
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    padding: 0 25px;
+    z-index: 1000;
+    
+    overflow: visible; /* Changed to visible so drop shadows aren't clipped */
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* --- DARK MODE OVERRIDE --- */
+body.dark-mode .nav-spotlight {
+    background: rgba(15, 23, 42, 0.65); 
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* --- THE SPOTLIGHT GLOW --- */
+.nav-glow-layer {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 50px; /* Matched border radius */
+    overflow: hidden;    /* Clips the glow inside the border radius */
+    
+    background: radial-gradient(
+        400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+        rgba(99, 102, 241, 0.15), 
+        transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+body.dark-mode .nav-glow-layer {
+    background: radial-gradient(
+        400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+        rgba(255, 255, 255, 0.08), 
+        transparent 40%
+    );
+}
+
+.nav-spotlight:hover .nav-glow-layer {
+    opacity: 1;
+}
+
+/* --- HIDDEN STATE --- */
+.nav-hidden {
+    transform: translateX(-50%) translateY(-150px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- LOGO --- */
+.nav-logo-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 1002;
+    flex-shrink: 0; /* Prevents logo from shrinking */
+}
+.nav-logo-container:hover { transform: scale(1.05); }
+
+.nav-logo-img {
+    height: 35px; width: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(99, 102, 241, 0.2); 
+}
+body.dark-mode .nav-logo-img {
+    border: 2px solid rgba(255, 255, 255, 0.1); 
+}
+
+/* --- LINKS (Pills) --- */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* Tighter gap for desktop */
+}
+
+.nav-pill {
+    padding: 8px 14px;
+    border-radius: 20px;
+    color: #64748b; 
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap; /* Prevents text wrap */
+}
+
+body.dark-mode .nav-pill { color: #94a3b8; }
+
+.nav-pill:hover {
+    color: #4f46e5;
+    background: rgba(99, 102, 241, 0.05);
+}
+body.dark-mode .nav-pill:hover {
+    color: white;
+    background: rgba(255,255,255,0.05);
+}
+
+.nav-pill.active {
+    color: #4f46e5;
+    background: rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.1);
+}
+body.dark-mode .nav-pill.active {
+    color: white;
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 0 10px rgba(255,255,255,0.05);
+}
+
+/* --- ACTIONS WRAPPER (Right Side) --- */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1002;
+    flex-shrink: 0;
+}
+
+/* --- TOGGLE BUTTON --- */
+.nav-toggle {
+    width: 35px; height: 35px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+body.dark-mode .nav-toggle {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-toggle:hover {
+    transform: rotate(15deg);
+    background: rgba(0,0,0,0.1);
+}
+body.dark-mode .nav-toggle:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* --- MOBILE HAMBURGER --- */
+.mobile-toggle {
+    display: none; /* Hidden on large screens */
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #1e293b;
+    width: 35px; height: 35px;
+    align-items: center;
+    justify-content: center;
+    /* Styling to match toggle button */
+    background: rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+body.dark-mode .mobile-toggle { 
+    color: white; 
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* --- RESPONSIVE BREAKPOINT (TABLET & MOBILE) --- */
+/* Changed to 1024px to cover Tablets (iPad) and Mobile */
+@media (max-width: 1024px) {
+    .nav-spotlight {
+        width: 90%;
+        min-width: unset; /* Reset min-width constraint */
+        padding: 0 15px;
+    }
+    
+    .mobile-toggle { display: flex; }
+    
+    /* Fullscreen Mobile Menu */
+    .nav-links {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; 
+        height: 100vh;
+        background: var(--bg-card); /* Adaptive BG */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        transform: translateY(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001; /* Behind Logo/Toggle */
+        
+        /* Ensure scrolling on landscape phones */
+        overflow-y: auto; 
+        padding-top: 60px;
+        padding-bottom: 40px;
+    }
+
+    .nav-links.show-mobile {
+        transform: translateY(0);
+    }
+
+    .nav-pill {
+        font-size: 1.3rem;
+        padding: 10px 30px;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* --- SMALL MOBILE TWEAKS --- */
+@media (max-width: 400px) {
+    .nav-spotlight {
+        width: 95%;
+        padding: 0 10px;
+    }
+    .nav-logo-text {
+        font-size: 0.9rem; /* Slightly smaller logo text if needed */
+    }
+}
