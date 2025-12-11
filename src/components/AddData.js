@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaPlus, FaTimes, FaEdit, FaTrash } from "react-icons/fa";
 
+// --- CONFIGURATION ---
+// Use your Live Backend URL here
+const API_BASE_URL = "https://rajib-portfolio-api.onrender.com/api";
+
 const AddData = ({ isAdmin, refreshData }) => {
     const [showModal, setShowModal] = useState(false);
     const [activeTab, setActiveTab] = useState("project");
@@ -13,7 +17,7 @@ const AddData = ({ isAdmin, refreshData }) => {
     const [editingId, setEditingId] = useState(null);
     const [uploading, setUploading] = useState(false);
     
-    // NEW: Store the profile ID explicitly
+    // Store the profile ID explicitly
     const [profileId, setProfileId] = useState(null);
 
     // --- FETCH DATA WHEN TAB CHANGES ---
@@ -36,8 +40,8 @@ const AddData = ({ isAdmin, refreshData }) => {
     // Fetch Generic Lists (Skills, Edu)
     const fetchItems = async (type) => {
         try {
-            // Using relative URL to leverage proxy
-            const res = await axios.get(`/api/${type}`);
+            // FIXED: Use Full Backend URL
+            const res = await axios.get(`${API_BASE_URL}/${type}`);
             setExistingItems(res.data);
         } catch (err) { console.error(`Error fetching ${type}:`, err); }
     };
@@ -45,7 +49,8 @@ const AddData = ({ isAdmin, refreshData }) => {
     // Fetch Profile Data (Home & About Section)
     const fetchProfile = async () => {
         try {
-            const res = await axios.get("/api/profile");
+            // FIXED: Use Full Backend URL
+            const res = await axios.get(`${API_BASE_URL}/profile`);
             // Pre-fill the form with existing database data
             if (res.data) {
                 setFormData(res.data);
@@ -69,7 +74,8 @@ const AddData = ({ isAdmin, refreshData }) => {
         uploadData.append("file", file);
         setUploading(true);
         try {
-            const res = await axios.post("/api/upload", uploadData, {
+            // FIXED: Use Full Backend URL
+            const res = await axios.post(`${API_BASE_URL}/upload`, uploadData, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             setFormData(prev => ({ ...prev, [fieldName]: res.data }));
@@ -94,7 +100,8 @@ const AddData = ({ isAdmin, refreshData }) => {
 
         if(!window.confirm(`Are you sure you want to delete this item?`)) return;
         try {
-            await axios.delete(`/api/${endpoint}/${id}`, { headers: { "Access-Key": "Rajib" } });
+            // FIXED: Use Full Backend URL
+            await axios.delete(`${API_BASE_URL}/${endpoint}/${id}`, { headers: { "Access-Key": "Rajib" } });
             fetchItems(endpoint); 
             refreshData(); 
         } catch (err) { alert(`Delete failed.`); }
@@ -104,7 +111,6 @@ const AddData = ({ isAdmin, refreshData }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const headers = { "Access-Key": "Rajib" };
-        let url = "/api";
         let success = false;
 
         // FIX: Map activeTab to the correct Backend API Endpoint
@@ -120,21 +126,21 @@ const AddData = ({ isAdmin, refreshData }) => {
         const endpointType = endpointMap[activeTab];
 
         try {
-            let endpoint = `${url}/${endpointType}`;
+            // FIXED: Use Full Backend URL for submission
+            let endpoint = `${API_BASE_URL}/${endpointType}`;
             let method = axios.post;
 
             if (activeTab === "profile") {
-                // CHANGED: Use the fetched profileId instead of hardcoded '1'
+                // Use the fetched profileId instead of hardcoded '1'
                 if (profileId) {
-                     await axios.put(`${url}/profile/${profileId}`, formData, { headers });
+                     await axios.put(`${API_BASE_URL}/profile/${profileId}`, formData, { headers });
                 } else {
-                     // If no profile exists yet, create one (POST is usually disabled for profile in standard setup but safe to have fallback logic or rely on initial seed)
-                     // If your backend doesn't support POST /profile, assume update on ID 1 as fallback
-                     await axios.put(`${url}/profile/1`, formData, { headers }); 
+                     // Fallback if no ID found
+                     await axios.put(`${API_BASE_URL}/profile/1`, formData, { headers }); 
                 }
             } else if (editingId) {
                 // UPDATE (Skill, Edu)
-                endpoint = `${url}/${endpointType}/${editingId}`;
+                endpoint = `${API_BASE_URL}/${endpointType}/${editingId}`;
                 method = axios.put;
                 await method(endpoint, formData, { headers });
             } else {
