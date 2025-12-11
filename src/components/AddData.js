@@ -12,6 +12,9 @@ const AddData = ({ isAdmin, refreshData }) => {
     const [formData, setFormData] = useState({});
     const [editingId, setEditingId] = useState(null);
     const [uploading, setUploading] = useState(false);
+    
+    // NEW: Store the profile ID explicitly
+    const [profileId, setProfileId] = useState(null);
 
     // --- FETCH DATA WHEN TAB CHANGES ---
     useEffect(() => {
@@ -33,7 +36,8 @@ const AddData = ({ isAdmin, refreshData }) => {
     // Fetch Generic Lists (Skills, Edu)
     const fetchItems = async (type) => {
         try {
-            const res = await axios.get(`https://rajib-portfolio-api.onrender.com/api/${type}`);
+            // Using relative URL to leverage proxy
+            const res = await axios.get(`/api/${type}`);
             setExistingItems(res.data);
         } catch (err) { console.error(`Error fetching ${type}:`, err); }
     };
@@ -41,10 +45,14 @@ const AddData = ({ isAdmin, refreshData }) => {
     // Fetch Profile Data (Home & About Section)
     const fetchProfile = async () => {
         try {
-            const res = await axios.get("https://rajib-portfolio-api.onrender.com/api/profile");
+            const res = await axios.get("/api/profile");
             // Pre-fill the form with existing database data
             if (res.data) {
                 setFormData(res.data);
+                // Capture the ID if it exists
+                if (res.data.id) {
+                    setProfileId(res.data.id);
+                }
             }
         } catch (err) { console.error("Error fetching profile:", err); }
     };
@@ -61,7 +69,7 @@ const AddData = ({ isAdmin, refreshData }) => {
         uploadData.append("file", file);
         setUploading(true);
         try {
-            const res = await axios.post("https://rajib-portfolio-api.onrender.com/api/upload", uploadData, {
+            const res = await axios.post("/api/upload", uploadData, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             setFormData(prev => ({ ...prev, [fieldName]: res.data }));
@@ -84,9 +92,9 @@ const AddData = ({ isAdmin, refreshData }) => {
         };
         const endpoint = typeMap[type] || type;
 
-        if(!window.confirm(`Delete this item?`)) return;
+        if(!window.confirm(`Are you sure you want to delete this item?`)) return;
         try {
-            await axios.delete(`https://rajib-portfolio-api.onrender.com/api/${endpoint}/${id}`, { headers: { "Access-Key": "Rajib" } });
+            await axios.delete(`/api/${endpoint}/${id}`, { headers: { "Access-Key": "Rajib" } });
             fetchItems(endpoint); 
             refreshData(); 
         } catch (err) { alert(`Delete failed.`); }
@@ -96,7 +104,7 @@ const AddData = ({ isAdmin, refreshData }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const headers = { "Access-Key": "Rajib" };
-        let url = "https://rajib-portfolio-api.onrender.com/api";
+        let url = "/api";
         let success = false;
 
         // FIX: Map activeTab to the correct Backend API Endpoint
@@ -116,8 +124,14 @@ const AddData = ({ isAdmin, refreshData }) => {
             let method = axios.post;
 
             if (activeTab === "profile") {
-                // Profile is always an UPDATE to ID 1
-                await axios.put(`${url}/profile/1`, formData, { headers }); 
+                // CHANGED: Use the fetched profileId instead of hardcoded '1'
+                if (profileId) {
+                     await axios.put(`${url}/profile/${profileId}`, formData, { headers });
+                } else {
+                     // If no profile exists yet, create one (POST is usually disabled for profile in standard setup but safe to have fallback logic or rely on initial seed)
+                     // If your backend doesn't support POST /profile, assume update on ID 1 as fallback
+                     await axios.put(`${url}/profile/1`, formData, { headers }); 
+                }
             } else if (editingId) {
                 // UPDATE (Skill, Edu)
                 endpoint = `${url}/${endpointType}/${editingId}`;
@@ -229,7 +243,7 @@ const AddData = ({ isAdmin, refreshData }) => {
                                 </>
                             )}
                             
-                            {/* --- PROJECT TAB (Updated) --- */}
+                            {/* --- PROJECT TAB --- */}
                             {activeTab === "project" && (
                                 <>
                                     <StyledInput name="projectName" value={formData.projectName || ""} placeholder="Project Name" onChange={handleChange} required />
