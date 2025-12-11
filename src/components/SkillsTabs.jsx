@@ -37,7 +37,7 @@ const SkillsTabs = ({ skills, isAdmin, refreshData }) => {
   const handleDelete = async (id) => {
     if (window.confirm("Delete this skill?")) {
       try {
-        await axios.delete(`http://localhost:8080/api/skills/${id}`, { headers: { "Access-Key": "Rajib" } });
+        await axios.delete(`https://rajib-portfolio-api.onrender.com/api/skills/${id}`, { headers: { "Access-Key": "Rajib" } });
         refreshData();
       } catch (error) { alert("Failed to delete skill."); }
     }
@@ -46,7 +46,7 @@ const SkillsTabs = ({ skills, isAdmin, refreshData }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-        await axios.put(`http://localhost:8080/api/skills/${editingItem.id}`, editingItem, { 
+        await axios.put(`https://rajib-portfolio-api.onrender.com/api/skills/${editingItem.id}`, editingItem, { 
             headers: { "Access-Key": "Rajib" } 
         });
         alert("Skill Updated!");

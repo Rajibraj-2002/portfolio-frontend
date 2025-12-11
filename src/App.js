@@ -187,12 +187,12 @@ function App() {
   const fetchData = async () => {
     try {
       const [resProfile, resEdu, resExp, resSkills, resProj, resCert] = await Promise.all([
-        axios.get("http://localhost:8080/api/profile"),
-        axios.get("http://localhost:8080/api/education"),
-        axios.get("http://localhost:8080/api/experience"),
-        axios.get("http://localhost:8080/api/skills"),
-        axios.get("http://localhost:8080/api/projects"),
-        axios.get("http://localhost:8080/api/certificates"),
+        axios.get("https://rajib-portfolio-api.onrender.com/api/profile"),
+        axios.get("https://rajib-portfolio-api.onrender.com/api/education"),
+        axios.get("https://rajib-portfolio-api.onrender.com/api/experience"),
+        axios.get("https://rajib-portfolio-api.onrender.com/api/skills"),
+        axios.get("https://rajib-portfolio-api.onrender.com/api/projects"),
+        axios.get("https://rajib-portfolio-api.onrender.com/api/certificates"),
       ]);
 
       setProfile(resProfile.data);

@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Experience.css"; 
 
 // Use the Full URL to avoid Proxy issues
-const API_BASE_URL = "http://localhost:8080/api/experience";
+const API_BASE_URL = "https://rajib-portfolio-api.onrender.com/api/experience";
 
 const Experience = ({ experience, isAdmin, refreshData }) => {
   const [editingItem, setEditingItem] = useState(null);

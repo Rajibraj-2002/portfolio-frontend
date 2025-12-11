@@ -9,7 +9,7 @@ const Education = ({ education, isAdmin, refreshData }) => {
   const handleDelete = async (id) => {
     if (window.confirm("Delete this education entry?")) {
       try {
-        await axios.delete(`http://localhost:8080/api/education/${id}`, { headers: { "Access-Key": "Rajib" } });
+        await axios.delete(`https://rajib-portfolio-api.onrender.com/api/education/${id}`, { headers: { "Access-Key": "Rajib" } });
         refreshData();
       } catch (error) { alert("Failed to delete."); }
     }
@@ -18,7 +18,7 @@ const Education = ({ education, isAdmin, refreshData }) => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-        await axios.put(`http://localhost:8080/api/education/${editingItem.id}`, editingItem, {
+        await axios.put(`https://rajib-portfolio-api.onrender.com/api/education/${editingItem.id}`, editingItem, {
             headers: { "Access-Key": "Rajib" }
         });
         alert("Updated Successfully!");

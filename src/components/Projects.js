@@ -29,7 +29,7 @@ const Projects = ({ projects, isAdmin, refreshData }) => {
   const handleDelete = async (id) => {
     if (window.confirm("Delete this project?")) {
       try {
-        await axios.delete(`http://localhost:8080/api/projects/${id}`, { headers: { "Access-Key": "Rajib" } });
+        await axios.delete(`https://rajib-portfolio-api.onrender.com/api/projects/${id}`, { headers: { "Access-Key": "Rajib" } });
         refreshData();
       } catch (error) { alert("Failed to delete"); }
     }
@@ -46,7 +46,7 @@ const Projects = ({ projects, isAdmin, refreshData }) => {
             repoLink: editingItem.repoLink, 
             projectCredentials: editingItem.projectCredentials 
         }; 
-        await axios.put(`http://localhost:8080/api/projects/${editingItem.id}`, payload, { headers: { "Access-Key": "Rajib" } });
+        await axios.put(`https://rajib-portfolio-api.onrender.com/api/projects/${editingItem.id}`, payload, { headers: { "Access-Key": "Rajib" } });
         alert("Updated Successfully!");
         setEditingItem(null);
         refreshData();

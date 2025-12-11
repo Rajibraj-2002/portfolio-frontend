@@ -16,7 +16,7 @@ const Certificates = ({ certificates, isAdmin, refreshData }) => {
   const handleDelete = async (id) => {
     if (window.confirm("Delete this certificate?")) {
       try {
-        await axios.delete(`http://localhost:8080/api/certificates/${id}`, { headers: { "Access-Key": "Rajib" } });
+        await axios.delete(`https://rajib-portfolio-api.onrender.com/api/certificates/${id}`, { headers: { "Access-Key": "Rajib" } });
         refreshData();
       } catch (error) { alert("Failed to delete."); }
     }
@@ -26,7 +26,7 @@ const Certificates = ({ certificates, isAdmin, refreshData }) => {
     e.preventDefault();
     try {
       const payload = { ...editingItem };
-      await axios.put(`http://localhost:8080/api/certificates/${editingItem.id}`, payload, { headers: { "Access-Key": "Rajib" } });
+      await axios.put(`https://rajib-portfolio-api.onrender.com/api/certificates/${editingItem.id}`, payload, { headers: { "Access-Key": "Rajib" } });
       alert("Certificate Updated!");
       setEditingItem(null);
       refreshData();

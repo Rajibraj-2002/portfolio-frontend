@@ -12,7 +12,7 @@ const ProjectDetails = () => {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/projects");
+        const response = await axios.get("https://rajib-portfolio-api.onrender.com/api/projects");
         
         // FIX: Convert both IDs to string for strict comparison (===)
         const foundProject = response.data.find(p => String(p.id) === String(id));

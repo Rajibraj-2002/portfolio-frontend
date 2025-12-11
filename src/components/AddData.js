@@ -33,7 +33,7 @@ const AddData = ({ isAdmin, refreshData }) => {
     // Fetch Generic Lists (Skills, Edu)
     const fetchItems = async (type) => {
         try {
-            const res = await axios.get(`http://localhost:8080/api/${type}`);
+            const res = await axios.get(`https://rajib-portfolio-api.onrender.com/api/${type}`);
             setExistingItems(res.data);
         } catch (err) { console.error(`Error fetching ${type}:`, err); }
     };
@@ -41,7 +41,7 @@ const AddData = ({ isAdmin, refreshData }) => {
     // Fetch Profile Data (Home & About Section)
     const fetchProfile = async () => {
         try {
-            const res = await axios.get("http://localhost:8080/api/profile");
+            const res = await axios.get("https://rajib-portfolio-api.onrender.com/api/profile");
             // Pre-fill the form with existing database data
             if (res.data) {
                 setFormData(res.data);
@@ -61,7 +61,7 @@ const AddData = ({ isAdmin, refreshData }) => {
         uploadData.append("file", file);
         setUploading(true);
         try {
-            const res = await axios.post("http://localhost:8080/api/upload", uploadData, {
+            const res = await axios.post("https://rajib-portfolio-api.onrender.com/api/upload", uploadData, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             setFormData(prev => ({ ...prev, [fieldName]: res.data }));
@@ -86,7 +86,7 @@ const AddData = ({ isAdmin, refreshData }) => {
 
         if(!window.confirm(`Delete this item?`)) return;
         try {
-            await axios.delete(`http://localhost:8080/api/${endpoint}/${id}`, { headers: { "Access-Key": "Rajib" } });
+            await axios.delete(`https://rajib-portfolio-api.onrender.com/api/${endpoint}/${id}`, { headers: { "Access-Key": "Rajib" } });
             fetchItems(endpoint); 
             refreshData(); 
         } catch (err) { alert(`Delete failed.`); }
@@ -96,7 +96,7 @@ const AddData = ({ isAdmin, refreshData }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const headers = { "Access-Key": "Rajib" };
-        let url = "http://localhost:8080/api";
+        let url = "https://rajib-portfolio-api.onrender.com/api";
         let success = false;
 
         // FIX: Map activeTab to the correct Backend API Endpoint
