@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaLaptopCode, FaDatabase, FaClock, FaLock, FaKey } from "react-icons/fa";
+import SEO from "./SEO"; // Import SEO
 import "./ProjectDetails.css";
 
 const ProjectDetails = () => {
@@ -13,10 +14,8 @@ const ProjectDetails = () => {
     const fetchProject = async () => {
       try {
         const response = await axios.get("https://rajib-portfolio-api.onrender.com/api/projects");
-        
-        // FIX: Convert both IDs to string for strict comparison (===)
-        const foundProject = response.data.find(p => String(p.id) === String(id));
-        
+        // Using loose comparison (==) to handle string/number ID mismatch
+        const foundProject = response.data.find(p => p.id == id);
         setProject(foundProject);
         setLoading(false);
       } catch (error) {
@@ -25,7 +24,7 @@ const ProjectDetails = () => {
       }
     };
     fetchProject();
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0); 
   }, [id]);
 
   if (loading) return <div className="detail-status">Loading...</div>;
@@ -33,20 +32,18 @@ const ProjectDetails = () => {
 
   const techStackArray = project.techStack ? project.techStack.split(",") : [];
   
-  // --- SPECIAL LOGIC FOR SPECIFIC PROJECTS ---
+  // --- SPECIAL LOGIC ---
   let repoLinks = project.repoLink ? project.repoLink.split(",") : [];
   let isPrivateRepo = false;
   
   const titleLower = project.projectName ? project.projectName.toLowerCase() : "";
 
-  // 1. LMS Prime Override (Only for links if missing)
   if ((titleLower.includes("lms prime") || titleLower.includes("learning management")) && repoLinks.length === 0) {
       repoLinks = [
           "https://github.com/Rajibraj-2002/lms-frontend.git",
           "https://github.com/Rajibraj-2002/lms-backend.git"
       ];
   } 
-  // 2. CRM Private Logic
   else if (titleLower.includes("customer relationship") || titleLower.includes("crm")) {
       repoLinks = [];
       isPrivateRepo = true;
@@ -61,9 +58,18 @@ const ProjectDetails = () => {
   return (
     <div className="pd-wrapper">
       
+      {/* --- DYNAMIC SEO --- */}
+      <SEO 
+         title={project.projectName}
+         description={project.description ? project.description.substring(0, 150) + "..." : "View details about this project."}
+         keywords={`Project, ${project.techStack || "Web Development"}, Java, React`}
+         url={`/project/${id}`}
+      />
+
       {/* --- HERO HEADER --- */}
       <div className="pd-hero">
         <div className="pd-hero-content">
+            {/* UPDATED BACK LINK: Points to #projects anchor */}
             <Link to="/#projects" className="pd-back-btn">
                 <FaArrowLeft /> Back to Projects
             </Link>

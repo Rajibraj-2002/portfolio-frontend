@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { Routes, Route } from "react-router-dom"; 
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom"; 
 import "./App.css";
 
 // Components
@@ -18,10 +18,9 @@ import Certificates from "./components/Certificates";
 import Contact from "./components/Contact";
 import AdminLogin from "./components/AdminLogin";
 import Footer from "./components/Footer"; 
+import SEO from "./components/SEO"; // Import SEO Component
 
-// --- OPTIMIZED ANIMATION VARIANTS (High Performance) ---
-
-// 1. Elegant Fade + Float Up 
+// --- ANIMATION VARIANTS ---
 const blurFadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { 
@@ -31,7 +30,6 @@ const blurFadeUp = {
   }
 };
 
-// 2. Gentle Soft Scale
 const softScale = {
   hidden: { opacity: 0, scale: 0.95 },
   visible: { 
@@ -41,7 +39,6 @@ const softScale = {
   }
 };
 
-// 3. Smooth Slide from Right
 const smoothSlideRight = {
   hidden: { opacity: 0, x: 50 },
   visible: { 
@@ -58,23 +55,42 @@ const HomeContent = ({
   isDarkMode, toggleTheme 
 }) => {
   
+  const location = useLocation();
+
   useEffect(() => {
-    // Reset scroll when landing on home
+    // 1. Handle Scroll Restoration Manual
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
-    window.scrollTo(0, 0);
-  }, []);
+
+    // 2. Smart Scroll Logic
+    if (location.hash) {
+      const elementId = location.hash.replace("#", "");
+      const element = document.getElementById(elementId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100); 
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [location]);
 
   return (
     <>
+      {/* ADD SEO FOR HOME PAGE */}
+      <SEO 
+        title="Home" 
+        description={profile.summary || "Full Stack Developer Portfolio showcasing projects in React, Spring Boot, and MySQL."}
+      />
+
       <Navbar isDarkMode={isDarkMode} toggleTheme={toggleTheme} /> 
 
       <div id="home">
         <Hero profile={profile} onDownload={handleDownloadCV} isAdmin={isAdmin} />
       </div>
 
-      {/* About */}
       <motion.div 
         id="about" 
         initial="hidden" 
@@ -85,7 +101,6 @@ const HomeContent = ({
         <About profile={profile} />
       </motion.div>
 
-      {/* Education: Slide Right */}
       <motion.div 
         id="education" 
         initial="hidden" 
@@ -96,7 +111,6 @@ const HomeContent = ({
         <Education education={education} isAdmin={isAdmin} refreshData={fetchData} />
       </motion.div>
 
-      {/* Skills: Soft Scale */}
       <motion.div 
         id="skills" 
         initial="hidden" 
@@ -107,7 +121,6 @@ const HomeContent = ({
         <Skills skills={skills} isAdmin={isAdmin} refreshData={fetchData} />
       </motion.div>
 
-      {/* Projects: Fade Up */}
       <motion.div 
         id="projects" 
         initial="hidden" 
@@ -118,7 +131,6 @@ const HomeContent = ({
         <Projects projects={projects} isAdmin={isAdmin} refreshData={fetchData} />
       </motion.div>
 
-      {/* Experience: Slide Right */}
       <motion.div 
         id="internships" 
         initial="hidden" 
@@ -129,7 +141,6 @@ const HomeContent = ({
         <Experience experience={experience} isAdmin={isAdmin} refreshData={fetchData} />
       </motion.div>
 
-      {/* Certificates: Soft Scale */}
       <motion.div 
         id="certificates" 
         initial="hidden" 
@@ -140,7 +151,6 @@ const HomeContent = ({
         <Certificates certificates={certificates} isAdmin={isAdmin} refreshData={fetchData} />
       </motion.div>
 
-      {/* Contact: Fade Up */}
       <motion.div 
         id="contact" 
         initial="hidden" 
@@ -151,7 +161,6 @@ const HomeContent = ({
         <Contact profile={profile} />
       </motion.div>
 
-      {/* Footer: Added profile prop for social icons */}
       <Footer isDarkMode={isDarkMode} profile={profile} />
     </>
   );
@@ -159,9 +168,16 @@ const HomeContent = ({
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
-  
-  // --- DARK MODE STATE ---
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const navigate = useNavigate();
+
+  // --- RELOAD HANDLER ---
+  useEffect(() => {
+    const navEntries = performance.getEntriesByType("navigation");
+    if (navEntries.length > 0 && navEntries[0].type === "reload") {
+        navigate("/"); // Force navigate to Home on reload
+    }
+  }, [navigate]);
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -170,7 +186,9 @@ function App() {
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add("dark-mode");
+      document.body.classList.remove("light-mode");
     } else {
+      document.body.classList.add("light-mode");
       document.body.classList.remove("dark-mode");
     }
   }, [isDarkMode]);
@@ -186,13 +204,16 @@ function App() {
   // Fetch Data
   const fetchData = async () => {
     try {
+      // PROD URL for fetching data
+      const API_URL = "https://rajib-portfolio-api.onrender.com/api";
+      
       const [resProfile, resEdu, resExp, resSkills, resProj, resCert] = await Promise.all([
-        axios.get("https://rajib-portfolio-api.onrender.com/api/profile"),
-        axios.get("https://rajib-portfolio-api.onrender.com/api/education"),
-        axios.get("https://rajib-portfolio-api.onrender.com/api/experience"),
-        axios.get("https://rajib-portfolio-api.onrender.com/api/skills"),
-        axios.get("https://rajib-portfolio-api.onrender.com/api/projects"),
-        axios.get("https://rajib-portfolio-api.onrender.com/api/certificates"),
+        axios.get(`${API_URL}/profile`),
+        axios.get(`${API_URL}/education`),
+        axios.get(`${API_URL}/experience`),
+        axios.get(`${API_URL}/skills`),
+        axios.get(`${API_URL}/projects`),
+        axios.get(`${API_URL}/certificates`),
       ]);
 
       setProfile(resProfile.data);
