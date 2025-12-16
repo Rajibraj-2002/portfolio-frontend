@@ -19,6 +19,12 @@
     "react-scroll": "^1.9.3",
     "web-vitals": "^2.1.4"
   },
+  "overrides": {
+    "react-helmet-async": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
+  },
   "scripts": {
     "dev": "react-scripts start",
     "start": "react-scripts start",
