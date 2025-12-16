@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home Page -->
+  <url>
+    <loc>https://rajib-portfolio-two.vercel.app/</loc>
+    <lastmod>2025-12-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Project Pages (Dynamic, but good to list base ones) -->
+  <url>
+    <loc>https://rajib-portfolio-two.vercel.app/#about</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rajib-portfolio-two.vercel.app/#projects</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rajib-portfolio-two.vercel.app/#contact</loc>
+    <priority>0.7</priority>
+  </url>
+</urlset>
